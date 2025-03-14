@@ -1,17 +1,14 @@
 package com.github.challenges;
 
 import com.github.challenges.commands.ResetCommand;
-import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.codehaus.plexus.util.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 
-public final class ChallengesMain extends JavaPlugin {
+public final class Challenges extends JavaPlugin {
 
     @Override
     public void onLoad() {
@@ -26,7 +23,6 @@ public final class ChallengesMain extends JavaPlugin {
         if (getConfig().getBoolean("isReset")) {
 
             DirectoryManager.resetWorldDirectory();
-
             getConfig().set("isReset", false);
             saveConfig();
         }
@@ -55,8 +51,8 @@ public final class ChallengesMain extends JavaPlugin {
         Bukkit.shutdown();
     }
 
-    public static ChallengesMain getInstance() {
-        return getPlugin(ChallengesMain.class);
+    public static Challenges getInstance() {
+        return getPlugin(Challenges.class);
     }
 
 }

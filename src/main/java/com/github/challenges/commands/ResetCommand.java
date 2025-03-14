@@ -1,6 +1,6 @@
 package com.github.challenges.commands;
 
-import com.github.challenges.ChallengesMain;
+import com.github.challenges.Challenges;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,9 +27,10 @@ public class ResetCommand implements CommandExecutor {
                 onlinePlayer.kickPlayer("§cServer reset");
             }
 
-            ChallengesMain.getInstance().getConfig().set("isReset", true);
-            ChallengesMain.getInstance().saveConfig();
-            ChallengesMain.getInstance().restartServer();
+            Challenges.getInstance().getConfig().set("isReset", true);
+            Challenges.getInstance().saveConfig();
+            Challenges.getInstance().restartServer();
+            return true;
         }
 
 

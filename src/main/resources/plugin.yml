@@ -4,7 +4,7 @@ main: com.github.challenges.Challenges
 api-version: '1.21'
 
 commands:
-  bingo:
+  reset:
     description: Manages the challenges.
     permission: challenge.manage
     permission-message: You do not have permission to use this command.
