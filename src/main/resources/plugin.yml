@@ -2,3 +2,14 @@ name: challenges
 version: '1.0-SNAPSHOT'
 main: com.github.challenges.Challenges
 api-version: '1.21'
+
+commands:
+  bingo:
+    description: Manages the challenges.
+    permission: challenge.manage
+    permission-message: You do not have permission to use this command.
+
+permissions:
+  challenge.manage:
+    description: Allows the player to manage the challenges.
+    default: op
