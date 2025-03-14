@@ -8,6 +8,10 @@ commands:
     description: Manages the challenges.
     permission: challenge.manage
     permission-message: You do not have permission to use this command.
+  timer:
+    description: Manages the timer.
+    permission: challenge.manage
+    permission-message: You do not have permission to use this command.
 
 permissions:
   challenge.manage:

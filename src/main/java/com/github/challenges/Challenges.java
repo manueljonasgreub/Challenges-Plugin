@@ -1,6 +1,8 @@
 package com.github.challenges;
 
+import com.github.challenges.challenge.Challenge;
 import com.github.challenges.commands.ResetCommand;
+import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
 import org.bukkit.Bukkit;
@@ -9,6 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 
 public final class Challenges extends JavaPlugin {
+
+    Challenge challenge;
 
     @Override
     public void onLoad() {
@@ -31,15 +35,21 @@ public final class Challenges extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        challenge = new Challenge();
         BatchFileCreator.createBatchFileIfNotExists();
 
         getCommand("reset").setExecutor(new ResetCommand());
+        getCommand("timer").setExecutor(new TimerCommand());
 
     }
 
     @Override
     public void onDisable() {
         saveConfig();
+    }
+
+    public Challenge getChallenge() {
+        return challenge;
     }
 
     public void restartServer() {
