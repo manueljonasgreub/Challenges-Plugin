@@ -12,6 +12,10 @@ commands:
     description: Manages the timer.
     permission: challenge.manage
     permission-message: You do not have permission to use this command.
+  settings:
+    description: Configure the settings.
+    permission: challenge.manage
+    permission-message: You do not have permission to use this command.
 
 permissions:
   challenge.manage:
