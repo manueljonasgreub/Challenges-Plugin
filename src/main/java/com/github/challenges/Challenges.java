@@ -5,6 +5,7 @@ import com.github.challenges.commands.ResetCommand;
 import com.github.challenges.commands.SettingsCommand;
 import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.gui.GUIManager;
+import com.github.challenges.listeners.PlayerDamageListener;
 import com.github.challenges.listeners.PlayerDeathListener;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
@@ -55,6 +56,7 @@ public final class Challenges extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
 
     }
 
