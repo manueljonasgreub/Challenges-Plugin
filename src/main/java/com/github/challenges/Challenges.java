@@ -1,6 +1,7 @@
 package com.github.challenges;
 
 import com.github.challenges.challenge.Challenge;
+import com.github.challenges.commands.HealCommand;
 import com.github.challenges.commands.ResetCommand;
 import com.github.challenges.commands.SettingsCommand;
 import com.github.challenges.commands.TimerCommand;
@@ -53,6 +54,7 @@ public final class Challenges extends JavaPlugin {
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("timer").setExecutor(new TimerCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
+        getCommand("heal").setExecutor(new HealCommand());
 
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
