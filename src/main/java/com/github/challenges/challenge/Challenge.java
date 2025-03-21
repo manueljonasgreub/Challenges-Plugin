@@ -11,8 +11,12 @@ public class Challenge {
 
     private int time = 0;
     private boolean isRunning = false;
+    private boolean isAllDieOnDeath;
 
     public Challenge(){
+
+        loadConfig();
+
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Challenges.getInstance(),
                 () -> {
 
@@ -82,5 +86,32 @@ public class Challenge {
 
     public void resume() {
         isRunning = true;
+    }
+
+    public void reset() {
+        time = 0;
+        isRunning = false;
+    }
+
+    public boolean isAllDieOnDeath(){;
+        return isAllDieOnDeath;
+    }
+
+    public void setAllDieOnDeath(boolean isAllDieOnDeath){
+        this.isAllDieOnDeath = isAllDieOnDeath;
+        Challenges.getInstance().getConfig().set("isAllDieOnDeath", isAllDieOnDeath);
+        Challenges.getInstance().saveConfig();
+    }
+
+    private void loadConfig() {
+        isAllDieOnDeath = Challenges.getInstance().getConfig().getBoolean("isEveryoneDyingOnDeath");
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 }

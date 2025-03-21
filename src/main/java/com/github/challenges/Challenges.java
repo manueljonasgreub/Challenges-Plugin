@@ -5,6 +5,7 @@ import com.github.challenges.commands.ResetCommand;
 import com.github.challenges.commands.SettingsCommand;
 import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.gui.GUIManager;
+import com.github.challenges.listeners.PlayerDeathListener;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
 import org.bukkit.Bukkit;
@@ -26,18 +27,26 @@ public final class Challenges extends JavaPlugin {
             saveConfig();
         }
 
-        if (getConfig().getBoolean("isReset")) {
+        if (!getConfig().contains("isAllDieOnDeath")) {
+            getConfig().set("isAllDieOnDeath", true);
+            saveConfig();
+        }
 
+        if (getConfig().getBoolean("isReset")) {
             DirectoryManager.resetWorldDirectory();
             getConfig().set("isReset", false);
             saveConfig();
         }
+
+
     }
 
     @Override
     public void onEnable() {
 
         challenge = new Challenge();
+        challenge.setAllDieOnDeath(getConfig().getBoolean("isAllDieOnDeath"));
+
         BatchFileCreator.createBatchFileIfNotExists();
 
         getCommand("reset").setExecutor(new ResetCommand());
@@ -45,6 +54,7 @@ public final class Challenges extends JavaPlugin {
         getCommand("settings").setExecutor(new SettingsCommand());
 
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
 
     }
 
