@@ -5,10 +5,14 @@ import com.github.challenges.challenge.Challenge;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class TimerCommand implements CommandExecutor {
+import java.util.List;
+
+public class TimerCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
@@ -30,6 +34,10 @@ public class TimerCommand implements CommandExecutor {
                 challenge.start();
                 return true;
 
+            case "resume":
+                if(!Challenges.getInstance().getChallenge().isRunning()) challenge.start();
+                return true;
+
             case "pause":
                 challenge.pause();
                 return true;
@@ -48,5 +56,19 @@ public class TimerCommand implements CommandExecutor {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
+
+        if (strings.length == 1) {
+            return List.of("start", "resume", "pause", "set");
+        }
+
+        if (strings.length == 2 && strings[0].equals("set")) {
+            return List.of("<time>");
+        }
+
+        return List.of("");
     }
 }
