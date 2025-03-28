@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import java.io.File;
 import java.util.HashMap;
@@ -20,6 +21,9 @@ public class Challenge {
     private int time = 0;
     private boolean isRunning = false;
     private boolean isAllDieOnDeath;
+    private boolean isUltraHardcore;
+    private boolean isPVP;
+    private boolean isSplitHearts;
 
     private QuestionManager questionManager = new QuestionManager();
     private Map<UUID, Question> currentQuestions = new HashMap<>();
@@ -36,7 +40,6 @@ public class Challenge {
         }
         questionManager.load(target);
 
-        // ⏱️ Timer-Scheduler (jede Sekunde)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Challenges.getInstance(),
                 () -> {
                     printTime();
@@ -46,10 +49,9 @@ public class Challenge {
                     time++;
                 },
                 0,
-                20 // 1 Sekunde = 20 Ticks
+                20 
         );
 
-        // ❓ Fragen-Scheduler (alle 5–7 Minuten)
         Bukkit.getScheduler().runTaskTimer(Challenges.getInstance(), () -> {
             if (questionsActive) {
                 Question q = questionManager.getRandomQuestion();
@@ -65,7 +67,7 @@ public class Challenge {
                     }
                 }
             }
-        }, 20L * 60 * 5, 20L * 60 * (5 + new Random().nextInt(3))); // 5–7 Minuten
+        }, 20L * 60 * 5, 20L * 60 * (5 + new Random().nextInt(3)));
     }
 
 
@@ -138,6 +140,42 @@ public class Challenge {
         Challenges.getInstance().saveConfig();
     }
 
+    public boolean isUltraHardcore() {
+        return isUltraHardcore;
+    }
+
+    public void setUltraHardcore(boolean isUltraHardcore) {
+        this.isUltraHardcore = isUltraHardcore;
+
+        Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, !isUltraHardcore);
+
+        Challenges.getInstance().getConfig().set("isUltraHardcore", isUltraHardcore);
+        Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isPVP() {
+        return isPVP;
+    }
+
+    public void setPVP(boolean isPVP) {
+        this.isPVP = isPVP;
+
+        Challenges.getInstance().getServer().getWorld("world").setPVP(isPVP);
+
+        Challenges.getInstance().getConfig().set("isPVP", isPVP);
+        Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isSplitHearts() {
+        return isSplitHearts;
+    }
+
+    public void setSplitHearts(boolean splitHearts) {
+        isSplitHearts = splitHearts;
+
+        Challenges.getInstance().getConfig().set("isSplitHearts", isSplitHearts);
+        Challenges.getInstance().saveConfig();
+ 
     public boolean areQuestionsActive() {
         return questionsActive;
     }
@@ -152,6 +190,9 @@ public class Challenge {
 
     private void loadConfig() {
         isAllDieOnDeath = Challenges.getInstance().getConfig().getBoolean("isEveryoneDyingOnDeath");
+        isUltraHardcore = Challenges.getInstance().getConfig().getBoolean("isUltraHardcore");
+        isPVP = Challenges.getInstance().getConfig().getBoolean("isPVP");
+        isSplitHearts = Challenges.getInstance().getConfig().getBoolean("isSplitHearts");
     }
 
     public boolean isRunning() {
