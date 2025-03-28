@@ -8,6 +8,7 @@ import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.gui.GUIManager;
 import com.github.challenges.listeners.PlayerDamageListener;
 import com.github.challenges.listeners.PlayerDeathListener;
+import com.github.challenges.listeners.QuizAnswerListener;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
 import org.bukkit.Bukkit;
@@ -40,12 +41,19 @@ public final class Challenges extends JavaPlugin {
         challenge = new Challenge();
         challenge.setAllDieOnDeath(getConfig().getBoolean("isAllDieOnDeath"));
 
+
         BatchFileCreator.createBatchFileIfNotExists();
 
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("timer").setExecutor(new TimerCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
         getCommand("heal").setExecutor(new HealCommand());
+
+        challenge = new Challenge();
+        getServer().getPluginManager().registerEvents(
+                new QuizAnswerListener(challenge.getCurrentQuestions()),
+                this
+        );
 
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);

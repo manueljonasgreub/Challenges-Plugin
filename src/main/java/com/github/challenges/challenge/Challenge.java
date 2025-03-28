@@ -1,5 +1,8 @@
 package com.github.challenges.challenge;
 
+import com.github.challenges.challenge.quiz.QuestionManager;
+import com.github.challenges.challenge.quiz.Question;
+
 import com.github.challenges.Challenges;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -7,6 +10,11 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class Challenge {
 
@@ -17,24 +25,49 @@ public class Challenge {
     private boolean isPVP;
     private boolean isSplitHearts;
 
+    private QuestionManager questionManager = new QuestionManager();
+    private Map<UUID, Question> currentQuestions = new HashMap<>();
+    private boolean questionsActive = false;
+
     public Challenge(){
 
         loadConfig();
 
+        File target = new File(Challenges.getInstance().getDataFolder(), "Questions.json");
+
+        if (!target.exists()) {
+            Challenges.getInstance().saveResource("Questions.json", false);
+        }
+        questionManager.load(target);
+
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Challenges.getInstance(),
                 () -> {
-
                     printTime();
 
-                    if (!isRunning) {
-                        return;
-                    }
+                    if (!isRunning) return;
 
                     time++;
-
                 },
                 0,
-                20);
+                20 
+        );
+
+        Bukkit.getScheduler().runTaskTimer(Challenges.getInstance(), () -> {
+            if (questionsActive) {
+                Question q = questionManager.getRandomQuestion();
+                if (q != null) {
+                    Bukkit.broadcast(Component.text("📚 Frage: " + q.question).color(NamedTextColor.AQUA));
+                    Bukkit.broadcast(Component.text("1️⃣ " + q.answer1));
+                    Bukkit.broadcast(Component.text("2️⃣ " + q.answer2));
+                    Bukkit.broadcast(Component.text("3️⃣ " + q.answer3));
+                    Bukkit.broadcast(Component.text("4️⃣ " + q.answer4));
+
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        currentQuestions.put(player.getUniqueId(), q);
+                    }
+                }
+            }
+        }, 20L * 60 * 5, 20L * 60 * (5 + new Random().nextInt(3)));
     }
 
 
@@ -142,6 +175,17 @@ public class Challenge {
 
         Challenges.getInstance().getConfig().set("isSplitHearts", isSplitHearts);
         Challenges.getInstance().saveConfig();
+ 
+    public boolean areQuestionsActive() {
+        return questionsActive;
+    }
+
+    public void toggleQuestions() {
+        this.questionsActive = !this.questionsActive;
+    }
+
+    public Map<UUID, Question> getCurrentQuestions() {
+        return currentQuestions;
     }
 
     private void loadConfig() {
@@ -158,4 +202,5 @@ public class Challenge {
     public void setRunning(boolean running) {
         isRunning = running;
     }
+
 }
