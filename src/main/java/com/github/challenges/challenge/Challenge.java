@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 
 public class Challenge {
@@ -12,6 +13,7 @@ public class Challenge {
     private int time = 0;
     private boolean isRunning = false;
     private boolean isAllDieOnDeath;
+    private boolean isUltraHardcore;
 
     public Challenge(){
 
@@ -100,6 +102,24 @@ public class Challenge {
     public void setAllDieOnDeath(boolean isAllDieOnDeath){
         this.isAllDieOnDeath = isAllDieOnDeath;
         Challenges.getInstance().getConfig().set("isAllDieOnDeath", isAllDieOnDeath);
+        Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isUltraHardcore() {
+        return isUltraHardcore;
+    }
+
+    public void setUltraHardcore(boolean isUltraHardcore) {
+        this.isUltraHardcore = isUltraHardcore;
+
+        if(isUltraHardcore){
+            Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, false);
+        }
+        else{
+            Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, true);
+        }
+
+        Challenges.getInstance().getConfig().set("isUltraHardcore", isUltraHardcore);
         Challenges.getInstance().saveConfig();
     }
 

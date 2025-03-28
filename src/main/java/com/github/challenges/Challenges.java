@@ -34,6 +34,11 @@ public final class Challenges extends JavaPlugin {
             saveConfig();
         }
 
+        if (!getConfig().contains("isUltraHardcore")) {
+            getConfig().set("isUltraHardcore", false);
+            saveConfig();
+        }
+
         if (getConfig().getBoolean("isReset")) {
             DirectoryManager.resetWorldDirectory();
             getConfig().set("isReset", false);

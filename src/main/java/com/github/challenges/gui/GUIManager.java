@@ -40,6 +40,9 @@ public class GUIManager implements Listener {
             case 9:
                 handleAllDieOnDeathClick(player, clickedItem);
                 break;
+            case 10:
+                handleUltraHardcoreClick(player, clickedItem);
+                break;
             default:
                 break;
 
@@ -47,17 +50,35 @@ public class GUIManager implements Listener {
 
     }
 
+    private void setUltraHardcoreItem(){
+        ItemStack item = new ItemStack(Material.GOLDEN_APPLE);
+        ItemMeta meta = item.getItemMeta();
+
+        if (Challenges.getInstance().getChallenge().isUltraHardcore()) {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Ultra Hardcore " + ChatColor.GREEN + "(ENABLED)");
+            meta.setLore(Arrays.asList(ChatColor.GRAY + "Disables natural ", ChatColor.GRAY + "regeneration when active"));
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        } else {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Ultra Hardcore " + ChatColor.RED + "(DISABLED)");
+            meta.setLore(Arrays.asList(ChatColor.GRAY + "Disables natural ", ChatColor.GRAY + "regeneration when active"));
+        }
+
+        item.setItemMeta(meta);
+        gui.setItem(10, item);
+    }
+
     private void setAllDieOnDeathItem() {
         ItemStack item = new ItemStack(Material.REDSTONE);
         ItemMeta meta = item.getItemMeta();
 
         if (Challenges.getInstance().getChallenge().isAllDieOnDeath()) {
-            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "All Die On Death " + ChatColor.GREEN + "(AKTIVIERT)");
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "All Die On Death " + ChatColor.GREEN + "(ENABLED)");
             meta.setLore(Arrays.asList(ChatColor.GRAY + "When a player dies,", ChatColor.GRAY + "all players will die and", ChatColor.GRAY + "be set to spectator mode."));
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
-            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "All Die On Death " + ChatColor.RED + "(DEAKTIVIERT)");
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "All Die On Death " + ChatColor.RED + "(DISABLED)");
             meta.setLore(Arrays.asList(ChatColor.GRAY + "When a player dies,", ChatColor.GRAY + "all players will die and", ChatColor.GRAY + "be set to spectator mode."));
         }
 
@@ -78,8 +99,22 @@ public class GUIManager implements Listener {
         openGUI(player);
     }
 
+    private void handleUltraHardcoreClick(Player player, ItemStack clickedItem) {
+        if ((Challenges.getInstance().getChallenge().isUltraHardcore())) {
+            Challenges.getInstance().getChallenge().setUltraHardcore(false);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        } else {
+            Challenges.getInstance().getChallenge().setUltraHardcore(true);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        }
+        setItems();
+        player.closeInventory();
+        openGUI(player);
+    }
+
     private void setItems() {
         setAllDieOnDeathItem();
+        setUltraHardcoreItem();
 
     }
 

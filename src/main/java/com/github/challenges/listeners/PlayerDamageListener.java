@@ -17,6 +17,7 @@ public class PlayerDamageListener implements Listener {
                 event.setCancelled(true);
             }
         }
+
     }
 
 }
