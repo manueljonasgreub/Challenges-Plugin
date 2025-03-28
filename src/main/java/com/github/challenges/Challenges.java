@@ -47,6 +47,7 @@ public final class Challenges extends JavaPlugin {
         challenge = new Challenge();
         challenge.setAllDieOnDeath(getConfig().getBoolean("isAllDieOnDeath"));
 
+
         BatchFileCreator.createBatchFileIfNotExists();
 
         getCommand("reset").setExecutor(new ResetCommand());
