@@ -1,6 +1,7 @@
 package com.github.challenges.gui;
 
 import com.github.challenges.Challenges;
+import com.github.challenges.challenge.quiz.Question;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -40,10 +41,13 @@ public class GUIManager implements Listener {
             case 9:
                 handleAllDieOnDeathClick(player, clickedItem);
                 break;
+            case 11:
+                handleQuestionToggleClick(player, clickedItem);
+                break;
             default:
                 break;
-
         }
+
 
     }
 
@@ -78,9 +82,47 @@ public class GUIManager implements Listener {
         openGUI(player);
     }
 
+    private void setQuestionToggleItem() {
+        ItemStack item = new ItemStack(Material.OAK_SIGN);
+        ItemMeta meta = item.getItemMeta();
+
+        if (Challenges.getInstance().getChallenge().areQuestionsActive()) {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Fragen alle 5–7 Minuten " + ChatColor.GREEN + "(AKTIVIERT)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Alle paar Minuten wird",
+                    ChatColor.GRAY + "eine Frage im Chat gestellt,",
+                    ChatColor.GRAY + "die beantwortet werden muss."));
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        } else {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Fragen alle 5–7 Minuten " + ChatColor.RED + "(DEAKTIVIERT)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Alle paar Minuten wird",
+                    ChatColor.GRAY + "eine Frage im Chat gestellt,",
+                    ChatColor.GRAY + "die beantwortet werden muss."));
+        }
+
+        item.setItemMeta(meta);
+        gui.setItem(11, item);
+    }
+
+    private void handleQuestionToggleClick(Player player, ItemStack clickedItem) {
+        Challenges.getInstance().getChallenge().toggleQuestions();
+
+        if (Challenges.getInstance().getChallenge().areQuestionsActive()) {
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        } else {
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        }
+
+        setItems();
+        player.closeInventory();
+        openGUI(player);
+    }
+
     private void setItems() {
         setAllDieOnDeathItem();
-
+        setQuestionToggleItem();
     }
 
     public void openGUI(Player player) {

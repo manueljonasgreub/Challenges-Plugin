@@ -1,0 +1,154 @@
+{"questions": [
+{
+"question": "Ein Kunde kauft Produkte mit bar.",
+"answer1": "Kasse / Warenertrag",
+"answer2": "FLL / Warenertrag",
+"answer3": "Bank / Warenertrag",
+"answer4": "Warenertrag / Kasse",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen kauft Büromaterial auf Rechnung.",
+"answer1": "Büromaterialaufwand / FLL",
+"answer2": "FLL / Bank",
+"answer3": "Kasse / Büromaterialaufwand",
+"answer4": "Bank / FLL",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Kunde bezahlt eine Rechnung per Banküberweisung.",
+"answer1": "FLL / Kasse",
+"answer2": "FLL / Bank",
+"answer3": "Bank / FLL",
+"answer4": "Bank / Warenertrag",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen kauft eine Maschine gegen Barzahlung.",
+"answer1": "Kasse / Maschinen",
+"answer2": "Maschinen / Kasse",
+"answer3": "Bank / Maschinen",
+"answer4": "Maschinen / Bank",
+"correctAnswer": "2"
+},
+{
+"question": "Ein Unternehmen bezahlt die Miete für das Büro per Banküberweisung.",
+"answer1": "Bank / Mietaufwand",
+"answer2": "Mietaufwand / Kasse",
+"answer3": "Mietaufwand / Bank",
+"answer4": "Kasse / Mietaufwand",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen nimmt ein Darlehen auf und erhält das Geld auf das Bankkonto.",
+"answer1": "Bank / Darlehen",
+"answer2": "Darlehen / Bank",
+"answer3": "Bank / Eigenkapital",
+"answer4": "Eigenkapital / Bank",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen bezahlt offene Lieferantenrechnungen per Banküberweisung.",
+"answer1": "FLL / Bank",
+"answer2": "Bank / VLL",
+"answer3": "VLL / Bank",
+"answer4": "Kasse / VLL",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen verkauft Waren gegen Rechnung.",
+"answer1": "FLL / Warenertrag",
+"answer2": "Warenertrag / Kasse",
+"answer3": "Bank / Warenertrag",
+"answer4": "Warenertrag / Bank",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen schreibt eine Forderung ab (Verlustschein).",
+"answer1": "Bank / FLL",
+"answer2": "FLL / Verlust aus Forderungen",
+"answer3": "Verlust aus Forderungen / FLL",
+"answer4": "FLL / Bank",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen kauft Waren gegen Rechnung.",
+"answer1": "FLL / Warenaufwand",
+"answer2": "VLL / Warenaufwand",
+"answer3": "Warenaufwand / VLL",
+"answer4": "Warenaufwand / Bank",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen erhält eine Rückzahlung einer zu viel bezahlten Rechnung auf das Bankkonto.",
+"answer1": "Bank / FLL",
+"answer2": "FLL / Bank",
+"answer3": "Bank / VLL",
+"answer4": "VLL / Bank",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Kunde zahlt eine Rechnung mit einer Kreditkarte.",
+"answer1": "FLL / Kasse",
+"answer2": "Kasse / Bank",
+"answer3": "FLL / Bank",
+"answer4": "Kreditkartenforderungen / Warenertrag",
+"correctAnswer": "4"
+},
+{
+"question": "Ein Unternehmen bezahlt Löhne per Banküberweisung.",
+"answer1": "Lohnaufwand / Bank",
+"answer2": "Bank / Lohnaufwand",
+"answer3": "Lohnaufwand / Kasse",
+"answer4": "Kasse / Lohnaufwand",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen nimmt Eigenkapital durch eine Kapitaleinlage eines Gesellschafters auf.",
+"answer1": "Privat / Eigenkapital",
+"answer2": "Eigenkapital / Privat",
+"answer3": "Bank / Darlehen",
+"answer4": "Darlehen / Bank",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen kauft ein Fahrzeug auf Rechnung.",
+"answer1": "VLL / Fahrzeuge",
+"answer2": "Fahrzeuge / VLL",
+"answer3": "Bank / Fahrzeuge",
+"answer4": "Fahrzeuge / Bank",
+"correctAnswer": "2"
+},
+{
+"question": "Ein Unternehmen verkauft eine alte Maschine gegen Barzahlung.",
+"answer1": "Kasse / Maschinen",
+"answer2": "Maschinen / Kasse",
+"answer3": "Bank / Maschinen",
+"answer4": "Maschinen / Bank",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen schreibt eine Rechnung für erbrachte Dienstleistungen.",
+"answer1": "FLL / Dienstleistungsertrag",
+"answer2": "Dienstleistungsertrag / FLL",
+"answer3": "FLL / Kasse",
+"answer4": "Dienstleistungsertrag / Bank",
+"correctAnswer": "1"
+},
+{
+"question": "Ein Unternehmen erhält eine Rechnung für Stromkosten.",
+"answer1": "Energieaufwand / Kasse",
+"answer2": "Energieaufwand / Bank",
+"answer3": "Energieaufwand / VLL",
+"answer4": "VLL / Energieaufwand",
+"correctAnswer": "3"
+},
+{
+"question": "Ein Unternehmen zahlt eine offene Rechnung per Bank.",
+"answer1": "Bank / VLL",
+"answer2": "VLL / Kasse",
+"answer3": "VLL / Bank",
+"answer4": "Kasse / VLL",
+"correctAnswer": "3"
+}
+]}
