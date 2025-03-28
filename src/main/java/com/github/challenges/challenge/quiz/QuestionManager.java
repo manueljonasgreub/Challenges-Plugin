@@ -19,7 +19,9 @@ public class QuestionManager {
             JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
             List<Question> loaded = new Gson().fromJson(json.get("questions"), new TypeToken<List<Question>>() {}.getType());
             questions.clear();
+            System.out.println("[Questions] Lade Fragen von Datei: " + file.getAbsolutePath());
             questions.addAll(loaded);
+            System.out.println("[Questions] Anzahl geladener Fragen: " + questions.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,6 +29,11 @@ public class QuestionManager {
 
 
     public Question getRandomQuestion() {
+        if (questions == null || questions.isEmpty()) {
+            System.out.println("[Questions] Keine Fragen geladen!");
+            return null;
+        }
         return questions.get(random.nextInt(questions.size()));
     }
+
 }
