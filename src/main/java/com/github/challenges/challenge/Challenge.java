@@ -36,6 +36,20 @@ public class Challenge {
         }
         questionManager.load(target);
 
+        // ⏱️ Timer-Scheduler (jede Sekunde)
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Challenges.getInstance(),
+                () -> {
+                    printTime();
+
+                    if (!isRunning) return;
+
+                    time++;
+                },
+                0,
+                20 // 1 Sekunde = 20 Ticks
+        );
+
+        // ❓ Fragen-Scheduler (alle 5–7 Minuten)
         Bukkit.getScheduler().runTaskTimer(Challenges.getInstance(), () -> {
             if (questionsActive) {
                 Question q = questionManager.getRandomQuestion();
@@ -51,7 +65,7 @@ public class Challenge {
                     }
                 }
             }
-        }, 20L * 60 * 5, 20L * 60 * (5 + new Random().nextInt(3))); // 5-7 Minuten
+        }, 20L * 60 * 5, 20L * 60 * (5 + new Random().nextInt(3))); // 5–7 Minuten
     }
 
 
