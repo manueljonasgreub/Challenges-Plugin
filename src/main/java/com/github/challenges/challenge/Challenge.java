@@ -14,6 +14,8 @@ public class Challenge {
     private boolean isRunning = false;
     private boolean isAllDieOnDeath;
     private boolean isUltraHardcore;
+    private boolean isPVP;
+    private boolean isSplitHearts;
 
     public Challenge(){
 
@@ -112,19 +114,41 @@ public class Challenge {
     public void setUltraHardcore(boolean isUltraHardcore) {
         this.isUltraHardcore = isUltraHardcore;
 
-        if(isUltraHardcore){
-            Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, false);
-        }
-        else{
-            Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, true);
-        }
+        Challenges.getInstance().getServer().getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, !isUltraHardcore);
 
         Challenges.getInstance().getConfig().set("isUltraHardcore", isUltraHardcore);
         Challenges.getInstance().saveConfig();
     }
 
+    public boolean isPVP() {
+        return isPVP;
+    }
+
+    public void setPVP(boolean isPVP) {
+        this.isPVP = isPVP;
+
+        Challenges.getInstance().getServer().getWorld("world").setPVP(isPVP);
+
+        Challenges.getInstance().getConfig().set("isPVP", isPVP);
+        Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isSplitHearts() {
+        return isSplitHearts;
+    }
+
+    public void setSplitHearts(boolean splitHearts) {
+        isSplitHearts = splitHearts;
+
+        Challenges.getInstance().getConfig().set("isSplitHearts", isSplitHearts);
+        Challenges.getInstance().saveConfig();
+    }
+
     private void loadConfig() {
         isAllDieOnDeath = Challenges.getInstance().getConfig().getBoolean("isEveryoneDyingOnDeath");
+        isUltraHardcore = Challenges.getInstance().getConfig().getBoolean("isUltraHardcore");
+        isPVP = Challenges.getInstance().getConfig().getBoolean("isPVP");
+        isSplitHearts = Challenges.getInstance().getConfig().getBoolean("isSplitHearts");
     }
 
     public boolean isRunning() {

@@ -23,21 +23,7 @@ public final class Challenges extends JavaPlugin {
     public void onLoad() {
 
         saveConfig();
-
-        if (!getConfig().contains("isReset")) {
-            getConfig().set("isReset", false);
-            saveConfig();
-        }
-
-        if (!getConfig().contains("isAllDieOnDeath")) {
-            getConfig().set("isAllDieOnDeath", true);
-            saveConfig();
-        }
-
-        if (!getConfig().contains("isUltraHardcore")) {
-            getConfig().set("isUltraHardcore", false);
-            saveConfig();
-        }
+        setDefaultConfig();
 
         if (getConfig().getBoolean("isReset")) {
             DirectoryManager.resetWorldDirectory();
@@ -83,6 +69,29 @@ public final class Challenges extends JavaPlugin {
             e.printStackTrace();
         }
         Bukkit.shutdown();
+    }
+
+    private void setDefaultConfig() {
+        if (!getConfig().contains("isReset")) {
+            getConfig().set("isReset", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isAllDieOnDeath")) {
+            getConfig().set("isAllDieOnDeath", true);
+            saveConfig();
+        }
+        if (!getConfig().contains("isUltraHardcore")) {
+            getConfig().set("isUltraHardcore", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isPVP")) {
+            getConfig().set("isPVP", true);
+            saveConfig();
+        }
+        if (!getConfig().contains("isSplitHearts")) {
+            getConfig().set("isSplitHearts", false);
+            saveConfig();
+        }
     }
 
     public static Challenges getInstance() {
