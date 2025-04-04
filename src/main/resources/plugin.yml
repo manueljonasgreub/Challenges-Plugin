@@ -16,6 +16,10 @@ commands:
     description: Configure the settings.
     permission: challenge.manage
     permission-message: You do not have permission to use this command.
+  heal:
+    description: Heal Players.
+    permission: challenge.manage
+    permission-message: You do not have permission to use this command.
 
 permissions:
   challenge.manage:
