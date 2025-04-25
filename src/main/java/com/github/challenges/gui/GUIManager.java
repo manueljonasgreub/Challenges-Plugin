@@ -46,10 +46,18 @@ public class GUIManager implements Listener {
                 break;
             case 11:
                 handlePVPClick(player, clickedItem);
+                break;
             case 12:
                 handleSplitHeartsClick(player, clickedItem);
+                break;
             case 13:
                 handleQuestionToggleClick(player, clickedItem);
+                break;
+            case 14:
+                handleJumpForbiddenClick(player, clickedItem);
+                break;
+            case 15:
+                handleSneakForbiddenClick(player, clickedItem);
                 break;
 
             default:
@@ -136,23 +144,67 @@ public class GUIManager implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         if (Challenges.getInstance().getChallenge().areQuestionsActive()) {
-            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Fragen alle 5–7 Minuten " + ChatColor.GREEN + "(AKTIVIERT)");
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Questions all 5–7 minutes " + ChatColor.GREEN + "(ENABLED)");
             meta.setLore(Arrays.asList(
-                    ChatColor.GRAY + "Alle paar Minuten wird",
-                    ChatColor.GRAY + "eine Frage im Chat gestellt,",
-                    ChatColor.GRAY + "die beantwortet werden muss."));
+                    ChatColor.GRAY + "Every few minutes,",
+                    ChatColor.GRAY + "a question is asked in the chat,",
+                    ChatColor.GRAY + "which must be answered."));
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
-            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Fragen alle 5–7 Minuten " + ChatColor.RED + "(DEAKTIVIERT)");
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Questions all 5–7 minutes " + ChatColor.RED + "(DISABLED)");
             meta.setLore(Arrays.asList(
-                    ChatColor.GRAY + "Alle paar Minuten wird",
-                    ChatColor.GRAY + "eine Frage im Chat gestellt,",
-                    ChatColor.GRAY + "die beantwortet werden muss."));
+                    ChatColor.GRAY + "Every few minutes,",
+                    ChatColor.GRAY + "a question is asked in the chat,",
+                    ChatColor.GRAY + "which must be answered."));
         }
 
         item.setItemMeta(meta);
         gui.setItem(13, item);
+    }
+
+    private void setJumpForbiddenItem() {
+        ItemStack item = new ItemStack(Material.OAK_FENCE);
+        ItemMeta meta = item.getItemMeta();
+
+        if (Challenges.getInstance().getChallenge().isJumpForbidden()) {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Jump = forbidden " + ChatColor.GREEN + "(ENABLED)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Enables dying if you",
+                    ChatColor.GRAY + "jump."));
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        } else {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Jump = forbidden " + ChatColor.RED + "(DISABLED)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Enables dying if you",
+                    ChatColor.GRAY + "jump."));
+        }
+
+        item.setItemMeta(meta);
+        gui.setItem(14, item);
+    }
+
+    private void setSneakForbiddenItem() {
+        ItemStack item = new ItemStack(Material.OAK_SLAB);
+        ItemMeta meta = item.getItemMeta();
+
+        if (Challenges.getInstance().getChallenge().isSneakForbidden()) {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Sneak = forbidden " + ChatColor.GREEN + "(ENABLED)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Enables dying if you",
+                    ChatColor.GRAY + "sneak."));
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        } else {
+            meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Sneak = forbidden " + ChatColor.RED + "(DISABLED)");
+            meta.setLore(Arrays.asList(
+                    ChatColor.GRAY + "Enables dying if you",
+                    ChatColor.GRAY + "sneak."));
+        }
+
+        item.setItemMeta(meta);
+        gui.setItem(15, item);
     }
 
   
@@ -204,7 +256,8 @@ public class GUIManager implements Listener {
             Challenges.getInstance().getChallenge().setSplitHearts(true);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0f, 1.0f);
         }
-      
+    }
+
 
     private void handleQuestionToggleClick(Player player, ItemStack clickedItem) {
         Challenges.getInstance().getChallenge().toggleQuestions();
@@ -220,19 +273,45 @@ public class GUIManager implements Listener {
         openGUI(player);
     }
 
+    private void handleJumpForbiddenClick(Player player, ItemStack clickedItem) {
+        if ((Challenges.getInstance().getChallenge().isJumpForbidden())) {
+            Challenges.getInstance().getChallenge().setJumpForbidden(false);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        } else {
+            Challenges.getInstance().getChallenge().setJumpForbidden(true);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        }
+        setItems();
+        player.closeInventory();
+        openGUI(player);
+    }
+
+    private void handleSneakForbiddenClick(Player player, ItemStack clickedItem) {
+        if ((Challenges.getInstance().getChallenge().isSneakForbidden())) {
+            Challenges.getInstance().getChallenge().setSneakForbidden(false);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        } else {
+            Challenges.getInstance().getChallenge().setSneakForbidden(true);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        }
+        setItems();
+        player.closeInventory();
+        openGUI(player);
+    }
+
     private void setItems() {
         setAllDieOnDeathItem();
         setUltraHardcoreItem();
         setPVPItem();
         setSplitHeartsItem();
         setQuestionToggleItem();
+        setJumpForbiddenItem();
+        setSneakForbiddenItem();
     }
 
     public void openGUI(Player player) {
         player.openInventory(gui);
     }
-
-
 
 
 }

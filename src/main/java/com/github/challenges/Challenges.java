@@ -105,6 +105,18 @@ public final class Challenges extends JavaPlugin {
             getConfig().set("isSplitHearts", false);
             saveConfig();
         }
+        if (!getConfig().contains("isQuestionsActive")) {
+            getConfig().set("isQuestionsActive", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isSneakForbidden")) {
+            getConfig().set("isSneakForbidden", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isJumpForbidden")) {
+            getConfig().set("isJumpForbidden", false);
+            saveConfig();
+        }
     }
 
     public static Challenges getInstance() {

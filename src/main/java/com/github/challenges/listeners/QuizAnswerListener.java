@@ -27,8 +27,9 @@ public class QuizAnswerListener implements Listener {
         String input = event.getMessage().trim();
 
         if (input.equals(question.correctAnswer)) {
-            player.sendMessage("§aRichtig!");
+            player.sendMessage("§aCorrect!");
         } else {
+
             player.sendMessage("§cFalsch! Die richtige Antwort war: " + question.correctAnswer);
             // Spieler sofort töten
             player.setHealth(0.0);
