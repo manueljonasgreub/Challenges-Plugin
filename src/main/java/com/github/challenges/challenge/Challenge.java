@@ -1,8 +1,8 @@
 package com.github.challenges.challenge;
 
-import com.github.challenges.Challenges;
-import com.github.challenges.challenge.quiz.Question;
 import com.github.challenges.challenge.quiz.QuestionManager;
+import com.github.challenges.challenge.quiz.Question;
+import com.github.challenges.Challenges;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -29,12 +29,10 @@ public class Challenge {
     private boolean isSneakForbidden;
     private boolean questionsActive;
 
-    private QuestionManager questionManager = new QuestionManager();
-    private Map<UUID,Question > currentQuestions = new HashMap<>();
+    private final QuestionManager questionManager = new QuestionManager();
+    private final Map<UUID, Question> currentQuestions = new HashMap<>();
 
-
-    public Challenge(){
-
+    public Challenge() {
         loadConfig();
 
         File target = new File(Challenges.getInstance().getDataFolder(), "Questions.json");
@@ -202,7 +200,7 @@ public class Challenge {
         Challenges.getInstance().getConfig().set("isSneakForbidden", isSneakForbidden);
         Challenges.getInstance().saveConfig();
     }
- 
+
     public boolean areQuestionsActive() {
         return questionsActive;
     }

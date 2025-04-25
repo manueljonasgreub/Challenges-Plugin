@@ -138,7 +138,7 @@ public class GUIManager implements Listener {
         item.setItemMeta(meta);
         gui.setItem(9, item);
     }
-      
+
     private void setQuestionToggleItem() {
         ItemStack item = new ItemStack(Material.OAK_SIGN);
         ItemMeta meta = item.getItemMeta();
@@ -207,7 +207,7 @@ public class GUIManager implements Listener {
         gui.setItem(15, item);
     }
 
-  
+
   
 
     private void handleAllDieOnDeathClick(Player player, ItemStack clickedItem) {
@@ -312,6 +312,8 @@ public class GUIManager implements Listener {
     public void openGUI(Player player) {
         player.openInventory(gui);
     }
+
+
 
 
 }
