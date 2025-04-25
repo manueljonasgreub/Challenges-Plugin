@@ -27,12 +27,12 @@ public class QuizAnswerListener implements Listener {
         String input = event.getMessage().trim();
 
         if (input.equals(question.correctAnswer)) {
-            player.sendMessage("§aRichtig!");
+            player.sendMessage("§aCorrect!");
         } else {
-            player.sendMessage("§cFalsch! Die richtige Antwort war: " + question.correctAnswer);
+            player.sendMessage("§cWrong! The correct answer was: " + question.correctAnswer);
         }
 
         currentQuestions.remove(player.getUniqueId());
-        event.setCancelled(true); // Antwort verschwindet aus dem öffentlichen Chat
+        event.setCancelled(true);
     }
 }

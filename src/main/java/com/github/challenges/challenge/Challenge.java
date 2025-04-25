@@ -1,15 +1,15 @@
 package com.github.challenges.challenge;
 
-import com.github.challenges.challenge.quiz.QuestionManager;
-import com.github.challenges.challenge.quiz.Question;
-
 import com.github.challenges.Challenges;
+import com.github.challenges.challenge.quiz.Question;
+import com.github.challenges.challenge.quiz.QuestionManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +25,13 @@ public class Challenge {
     private boolean isPVP;
     private boolean isSplitHearts;
 
+    private boolean isJumpForbidden;
+    private boolean isSneakForbidden;
+    private boolean questionsActive;
+
     private QuestionManager questionManager = new QuestionManager();
-    private Map<UUID, Question> currentQuestions = new HashMap<>();
-    private boolean questionsActive = false;
+    private Map<UUID,Question > currentQuestions = new HashMap<>();
+
 
     public Challenge(){
 
@@ -57,10 +61,10 @@ public class Challenge {
                 Question q = questionManager.getRandomQuestion();
                 if (q != null) {
                     Bukkit.broadcast(Component.text("📚 Frage: " + q.question).color(NamedTextColor.AQUA));
-                    Bukkit.broadcast(Component.text("1️⃣ " + q.answer1));
-                    Bukkit.broadcast(Component.text("2️⃣ " + q.answer2));
-                    Bukkit.broadcast(Component.text("3️⃣ " + q.answer3));
-                    Bukkit.broadcast(Component.text("4️⃣ " + q.answer4));
+                    Bukkit.broadcast(Component.text("1 " + q.answer1));
+                    Bukkit.broadcast(Component.text("2 " + q.answer2));
+                    Bukkit.broadcast(Component.text("3 " + q.answer3));
+                    Bukkit.broadcast(Component.text("4 " + q.answer4));
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         currentQuestions.put(player.getUniqueId(), q);
@@ -175,6 +179,29 @@ public class Challenge {
 
         Challenges.getInstance().getConfig().set("isSplitHearts", isSplitHearts);
         Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isJumpForbidden() {
+        return isJumpForbidden;
+    }
+
+    public void setJumpForbidden(boolean jumpForbidden) {
+        isJumpForbidden = jumpForbidden;
+
+        Challenges.getInstance().getConfig().set("isJumpForbidden", isJumpForbidden);
+        Challenges.getInstance().saveConfig();
+    }
+
+    public boolean isSneakForbidden() {
+        return isSneakForbidden;
+    }
+
+    public void setSneakForbidden(boolean sneakForbidden) {
+        isSneakForbidden = sneakForbidden;
+
+        Challenges.getInstance().getConfig().set("isSneakForbidden", isSneakForbidden);
+        Challenges.getInstance().saveConfig();
+    }
  
     public boolean areQuestionsActive() {
         return questionsActive;
@@ -182,6 +209,9 @@ public class Challenge {
 
     public void toggleQuestions() {
         this.questionsActive = !this.questionsActive;
+
+        Challenges.getInstance().getConfig().set("isQuestionsActive", questionsActive);
+        Challenges.getInstance().saveConfig();
     }
 
     public Map<UUID, Question> getCurrentQuestions() {
@@ -193,6 +223,7 @@ public class Challenge {
         isUltraHardcore = Challenges.getInstance().getConfig().getBoolean("isUltraHardcore");
         isPVP = Challenges.getInstance().getConfig().getBoolean("isPVP");
         isSplitHearts = Challenges.getInstance().getConfig().getBoolean("isSplitHearts");
+        questionsActive = Challenges.getInstance().getConfig().getBoolean("isQuestionsActive");
     }
 
     public boolean isRunning() {
