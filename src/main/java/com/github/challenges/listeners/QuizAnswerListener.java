@@ -30,9 +30,12 @@ public class QuizAnswerListener implements Listener {
             player.sendMessage("§aRichtig!");
         } else {
             player.sendMessage("§cFalsch! Die richtige Antwort war: " + question.correctAnswer);
+            // Spieler sofort töten
+            player.setHealth(0.0);
         }
 
+        // Frage freigeben und Chat-Nachricht verbergen
         currentQuestions.remove(player.getUniqueId());
-        event.setCancelled(true); // Antwort verschwindet aus dem öffentlichen Chat
+        event.setCancelled(true);
     }
 }

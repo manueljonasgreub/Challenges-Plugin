@@ -7,6 +7,7 @@ import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.gui.GUIManager;
 import com.github.challenges.listeners.PlayerDeathListener;
 import com.github.challenges.listeners.QuizAnswerListener;
+import com.github.challenges.listeners.InputBlockListener;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
 import org.bukkit.Bukkit;
@@ -44,10 +45,8 @@ public final class Challenges extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         challenge = new Challenge();
         challenge.setAllDieOnDeath(getConfig().getBoolean("isAllDieOnDeath"));
-
 
         BatchFileCreator.createBatchFileIfNotExists();
 
@@ -55,16 +54,19 @@ public final class Challenges extends JavaPlugin {
         getCommand("timer").setExecutor(new TimerCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
 
-        challenge = new Challenge();
+        // Listener registrieren
         getServer().getPluginManager().registerEvents(
                 new QuizAnswerListener(challenge.getCurrentQuestions()),
                 this
         );
-
+        getServer().getPluginManager().registerEvents(
+                new InputBlockListener(challenge.getCurrentQuestions()),
+                this
+        );
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
-
     }
+
 
     @Override
     public void onDisable() {

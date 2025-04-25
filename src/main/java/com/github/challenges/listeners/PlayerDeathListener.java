@@ -25,6 +25,14 @@ public class PlayerDeathListener implements Listener {
 
         }
 
+        // Timer pausieren
+        Challenges.getInstance().getChallenge().pause();
+
+        // Alle offenen Fragen für den gestorbenen Spieler entfernen
+        Challenges.getInstance().getChallenge()
+                .getCurrentQuestions()
+                .remove(event.getEntity().getUniqueId());
+
     }
 }
 
