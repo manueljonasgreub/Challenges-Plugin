@@ -1,12 +1,16 @@
 package com.github.challenges;
 
 import com.github.challenges.challenge.Challenge;
+import com.github.challenges.commands.HealCommand;
 import com.github.challenges.commands.ResetCommand;
 import com.github.challenges.commands.SettingsCommand;
 import com.github.challenges.commands.TimerCommand;
 import com.github.challenges.gui.GUIManager;
+import com.github.challenges.listeners.PlayerDamageListener;
+import com.github.challenges.listeners.PlayerDamageListener;
 import com.github.challenges.listeners.PlayerDeathListener;
 import com.github.challenges.listeners.QuizAnswerListener;
+import com.github.challenges.listeners.InputBlockListener;
 import com.github.challenges.listeners.InputBlockListener;
 import com.github.challenges.utils.BatchFileCreator;
 import com.github.challenges.utils.DirectoryManager;
@@ -23,16 +27,7 @@ public final class Challenges extends JavaPlugin {
     public void onLoad() {
 
         saveConfig();
-
-        if (!getConfig().contains("isReset")) {
-            getConfig().set("isReset", false);
-            saveConfig();
-        }
-
-        if (!getConfig().contains("isAllDieOnDeath")) {
-            getConfig().set("isAllDieOnDeath", true);
-            saveConfig();
-        }
+        setDefaultConfig();
 
         if (getConfig().getBoolean("isReset")) {
             DirectoryManager.resetWorldDirectory();
@@ -53,6 +48,7 @@ public final class Challenges extends JavaPlugin {
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("timer").setExecutor(new TimerCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
+        getCommand("heal").setExecutor(new HealCommand());
 
         // Listener registrieren
         getServer().getPluginManager().registerEvents(
@@ -65,6 +61,8 @@ public final class Challenges extends JavaPlugin {
         );
         getServer().getPluginManager().registerEvents(new GUIManager(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+
     }
 
 
@@ -84,6 +82,29 @@ public final class Challenges extends JavaPlugin {
             e.printStackTrace();
         }
         Bukkit.shutdown();
+    }
+
+    private void setDefaultConfig() {
+        if (!getConfig().contains("isReset")) {
+            getConfig().set("isReset", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isAllDieOnDeath")) {
+            getConfig().set("isAllDieOnDeath", true);
+            saveConfig();
+        }
+        if (!getConfig().contains("isUltraHardcore")) {
+            getConfig().set("isUltraHardcore", false);
+            saveConfig();
+        }
+        if (!getConfig().contains("isPVP")) {
+            getConfig().set("isPVP", true);
+            saveConfig();
+        }
+        if (!getConfig().contains("isSplitHearts")) {
+            getConfig().set("isSplitHearts", false);
+            saveConfig();
+        }
     }
 
     public static Challenges getInstance() {

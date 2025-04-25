@@ -18,8 +18,12 @@ public class PlayerDeathListener implements Listener {
 
         if (Challenges.getInstance().getChallenge().isAllDieOnDeath() && Challenges.getInstance().getChallenge().isRunning()) {
             Challenges.getInstance().getChallenge().reset();
+            Player deadPlayer = event.getPlayer();
+
+
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.setHealth(0);
+                if (!player.getName().equals(deadPlayer.getName())) player.setHealth(0);
+
                 player.setGameMode(GameMode.SPECTATOR);
             }
 

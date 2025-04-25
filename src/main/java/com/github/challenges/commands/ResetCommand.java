@@ -5,10 +5,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class ResetCommand implements CommandExecutor {
+import java.util.List;
+
+public class ResetCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] args) {
@@ -23,7 +27,7 @@ public class ResetCommand implements CommandExecutor {
 
         if (args[0].equals("confirm")) {
 
-            for(Player onlinePlayer : Bukkit.getOnlinePlayers()){
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 onlinePlayer.kickPlayer("§cServer reset");
             }
 
@@ -35,5 +39,11 @@ public class ResetCommand implements CommandExecutor {
 
 
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
+
+        return List.of("");
     }
 }
